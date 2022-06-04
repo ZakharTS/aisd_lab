@@ -2,24 +2,25 @@
 #define TASK_HASHTAB_H
 
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 
 #define HASHTAB_SIZE 200000
 #define HASHTAB_MUL 31
 
 struct listnode {
-    char *key;
+    std::string key;
     int value;
     struct listnode *next;
 };
-struct listnode *hashtab[HASHTAB_SIZE];
 
-int hash(char *key);
+int hash(std::string key);
 
 void hashtab_init(struct listnode **hashtab);
 
-void hashtab_add(struct listnode **hashtab, char *key, int value);
+void hashtab_add(struct listnode **hashtab, std::string key, int value);
 
-struct listnode *hashtab_lookup(struct listnode **hashtab, char *key);
+struct listnode *hashtab_lookup(struct listnode **hashtab, std::string key);
+
+void hashtab_delete(struct listnode **hashtab, std::string key);
 
 #endif

@@ -1,39 +1,40 @@
 #include "bstree.h"
 
-struct bstree *bstree_create(char * key, int value) {
+struct bstree *bstree_create(std::string key, int value) {
     struct bstree *node;
     node = (bstree *)(malloc(sizeof(*node)));
-    if (node != NULL) {
-        strcpy(node->key, key);
+    if (node != nullptr) {
+        node->key = key;
         node->value = value;
-        node->left = NULL;
-        node->right = NULL;
+        node->left = nullptr;
+        node->right = nullptr;
     }
+    return node;
 }
 
-void bstree_add(struct bstree *tree, char * key, int value) {
+void bstree_add(struct bstree *tree, std::string key, int value) {
     struct bstree *parent, *node;
-    if (tree == NULL) return;
-    while (tree != NULL) {
-        if (strcmp(key, tree->key) < 0)
+    if (tree == nullptr) return;
+    while (tree != nullptr) {
+        if (key < tree->key)
             tree = tree->left;
-        else if (strcmp(key, tree->key) > 0)
+        else if (key > tree->key)
             tree = tree->right;
         else
             return;
     }
     node = bstree_create(key, value);
-    if (strcmp(key, tree->key) < 0)
+    if (key < tree->key)
         tree->left = node;
     else
         tree->right = node;
 }
 
-struct bstree *bstree_lookup(struct bstree *tree, char * key) {
+struct bstree *bstree_lookup(struct bstree *tree, const char * key) {
     while (tree != NULL) {
-        if (strcmp(key, tree->key) == 0) {
+        if (key == tree->key) {
             return tree;
-        } else if (strcmp(key, tree->key) < 0) {
+        } else if (key < tree->key) {
             tree = tree->left;
         } else {
             tree = tree->right;
@@ -43,17 +44,17 @@ struct bstree *bstree_lookup(struct bstree *tree, char * key) {
 }
 
 struct bstree *bstree_min(struct bstree *tree) {
-    if (tree == NULL)
-        return NULL;
-    while (tree->left != NULL)
+    if (tree == nullptr)
+        return nullptr;
+    while (tree->left != nullptr)
         tree = tree->left;
     return tree;
 }
 
 struct bstree *bstree_max(struct bstree *tree) {
-    if (tree == NULL)
-        return NULL;
-    while (tree->right != NULL)
+    if (tree == nullptr)
+        return nullptr;
+    while (tree->right != nullptr)
         tree = tree->right;
     return tree;
 }
