@@ -1,13 +1,12 @@
 #include <iostream>
-#include <stack>
-#include <sstream>
+#include "stack.h"
 
 using namespace std;
 
 int main() {
     string input;
     getline(cin, input);
-    stack<string> tags;
+    struct stack *tags = stack_init();
     bool isRight = true;
     for (int i = 0; i < input.size(); i++) {
         if (input[i] == '<') {
@@ -23,27 +22,27 @@ int main() {
             if (current[0] == '/') {
                 string temp = current;
                 current.erase(0, 1);
-                if (tags.empty()) {
+                if (stack_is_empty(tags)) {
                     cout << "No pair for <" << temp << ">" << endl;
                     isRight = false;
                     continue;
                 }
-                if (current == tags.top()) {
-                    tags.pop();
+                if (current == stack_top(tags)) {
+                    stack_pop(tags);
                 } else {
                     cout << "No pair for <" << temp << "> or wrong tag closing." << endl;
                     isRight = false;
                     continue;
                 }
             } else {
-                tags.push(current);
+                stack_push(tags, current);
             }
         }
     }
-    while (!tags.empty()) {
-        cout << "No pair for <" << tags.top() << ">" << endl;
+    while (!stack_is_empty(tags)) {
+        cout << "No pair for <" << stack_top(tags) << ">" << endl;
         isRight = false;
-        tags.pop();
+        stack_pop(tags);
     }
     if (isRight) {
         cout << "Everything is right." << endl;
