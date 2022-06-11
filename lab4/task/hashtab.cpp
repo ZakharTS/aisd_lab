@@ -2,8 +2,7 @@
 
 int hash(std::string key) {
     int h = 0;
-    char p;
-    for (auto p : key) {
+    for (auto p: key) {
         h = h * HASHTAB_MUL + (int) p;
     }
     return h % HASHTAB_SIZE;
@@ -16,9 +15,8 @@ void hashtab_init(struct listnode **hashtab) {
 }
 
 void hashtab_add(struct listnode **hashtab, std::string key, int value) {
-    struct listnode *node;
+    struct listnode *node = new struct listnode;
     int index = hash(key);
-    node = (listnode *) (malloc(sizeof(*node)));
     if (node != nullptr) {
         node->key = key;
         node->value = value;

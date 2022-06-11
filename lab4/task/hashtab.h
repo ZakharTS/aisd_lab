@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string>
 
-#define HASHTAB_SIZE 200000
+#define HASHTAB_SIZE 10000
 #define HASHTAB_MUL 31
 
 struct listnode {

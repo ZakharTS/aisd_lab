@@ -1,21 +1,19 @@
 #include "bstree.h"
 
 struct bstree *bstree_create(std::string key, int value) {
-    struct bstree *node;
-    node = (bstree *)(malloc(sizeof(*node)));
-    if (node != nullptr) {
-        node->key = key;
-        node->value = value;
-        node->left = nullptr;
-        node->right = nullptr;
-    }
+    struct bstree *node = new struct bstree;
+    node->key = key;
+    node->value = value;
+    node->left = nullptr;
+    node->right = nullptr;
     return node;
 }
 
 void bstree_add(struct bstree *tree, std::string key, int value) {
-    struct bstree *parent, *node;
+    struct bstree *parent = tree, *node;
     if (tree == nullptr) return;
     while (tree != nullptr) {
+        parent = tree;
         if (key < tree->key)
             tree = tree->left;
         else if (key > tree->key)
@@ -24,14 +22,14 @@ void bstree_add(struct bstree *tree, std::string key, int value) {
             return;
     }
     node = bstree_create(key, value);
-    if (key < tree->key)
-        tree->left = node;
-    else
-        tree->right = node;
+    if (key < parent->key)
+        parent->left = node;
+    else if (key > parent->key)
+        parent->right = node;
 }
 
-struct bstree *bstree_lookup(struct bstree *tree, const char * key) {
-    while (tree != NULL) {
+struct bstree *bstree_lookup(struct bstree *tree, std::string key) {
+    while (tree != nullptr) {
         if (key == tree->key) {
             return tree;
         } else if (key < tree->key) {

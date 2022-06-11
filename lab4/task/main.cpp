@@ -1,6 +1,5 @@
-#include <iostream>
-#include <fstream>
-#include <ctime>
+#include <bits/stdc++.h>
+#include <stdlib.h>
 #include "bstree.h"
 #include "hashtab.h"
 
@@ -8,31 +7,83 @@ using namespace std;
 
 int main() {
     ifstream fin("file.txt");
-    string words[200000];
-    for (int i = 0; fin >> words[i]; i++);
-    struct listnode *hashtab[HASHTAB_SIZE];
-    hashtab_add(hashtab, words[0], 0);
-    hashtab_init(hashtab);
+    vector<string> words;
+    for (int i = 0; i < 200000; i++) {
+        string tmp;
+        fin >> tmp;
+        words.push_back(tmp);
+    }
+    cout << "Average case." << endl;
     struct bstree *tree = bstree_create(words[0], 0);
-    for (int i = 0; i < 20; i++) {
-        cout << i + 1 << ")" << endl;
-        for (int j = 0; j < 9999; j++) {
-            hashtab_add(hashtab, words[j + i * 10000], 0);
-            bstree_add(tree, words[j + i * 10000], 0);
+    struct listnode *hashtab[10000];
+    hashtab_init(hashtab);
+    for (int i = 0; i < 200000; i++) {
+        if ((i + 1) % 10000 == 0) {
+            cout << (i + 1) / 10000 << ") " << endl;
+            clock_t time = clock();
+            bstree_add(tree, words[i], i);
+            cout << "bstree_add " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+            time = clock();
+            bstree_lookup(tree, words[rand() % (i + 1)]);
+            cout << "bstree_lookup " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+            time = clock();
+            bstree_min(tree);
+            cout << "bstree_min " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+            time = clock();
+            bstree_max(tree);
+            cout << "bstree_max " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+
+            time = clock();
+            hashtab_add(hashtab, words[i], i);
+            cout << "hashtab_add " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+            time = clock();
+            hashtab_lookup(hashtab, words[rand() % (i + 1)]);
+            cout << "hashtab_lookup " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+        } else {
+            hashtab_add(hashtab, words[i], i);
+            bstree_add(tree, words[i], i);
         }
-        clock_t time = clock();
-        hashtab_add(hashtab, words[9999 + i * 10000], 0);
-        cout << "hashtab_add " << clock() - time << endl;
-        time = clock();
-        bstree_add(tree, words[9999 + i * 10000], 0);
-        cout << "bstree_add " << clock() - time << endl;
-        int random = rand() % ((i + 1) * 10000);
-        time = clock();
-        hashtab_lookup(hashtab, words[random]);
-        cout << "hashtab_lookup " << clock() - time << endl;
-        time = clock();
-        bstree_lookup(tree, words[random]);
-        cout << "bstree_lookup " << clock() - time << endl;
+    }
+    cout << endl;
+
+    sort(words.begin(), words.end());
+    tree = bstree_create(words[0], 0);
+    hashtab_init(hashtab);
+    cout << "Worst case." << endl;
+    for (int i = 0; i < 200000; i++) {
+        if ((i + 1) % 10000 == 0) {
+            cout << (i + 1) / 10000 << ") " << endl;
+            clock_t time = clock();
+            bstree_add(tree, words[i], i);
+            cout << "bstree_add " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+            time = clock();
+            bstree_lookup(tree, words[i]);
+            cout << "bstree_lookup " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+            time = clock();
+            bstree_max(tree);
+            cout << "bstree_max " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+
+            time = clock();
+            hashtab_add(hashtab, words[i], i);
+            cout << "hashtab_add " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+            time = clock();
+            hashtab_lookup(hashtab, words[i]);
+            cout << "hashtab_lookup " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+        } else {
+            hashtab_add(hashtab, words[i], i);
+            bstree_add(tree, words[i], i);
+        }
+    }
+
+    tree = bstree_create(words[0], 0);
+    for (int i = 0; i < 200000; i++) {
+        bstree_add(tree, words[200000 - 1 - i], i);
+        if ((i + 1) % 10000 == 0) {
+            cout << (i + 1) / 10000 << ") " << endl;
+            clock_t time = clock();
+            bstree_min(tree);
+            cout << "bstree_min " << (float) (clock() - time) / CLOCKS_PER_SEC << endl;
+        }
     }
     return 0;
 }
