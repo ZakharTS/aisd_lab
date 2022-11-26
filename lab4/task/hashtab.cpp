@@ -35,7 +35,7 @@ struct listnode *hashtab_lookup(struct listnode **hashtab, std::string key) {
     return nullptr;
 }
 
-void hashtab_delete(struct listnode **hashtab, std::string key) {
+/* void hashtab_delete(struct listnode **hashtab, std::string key) {
     int index = hash(key);
     struct listnode *prev = nullptr;
     for (struct listnode *p = hashtab[index]; p != nullptr; p = p->next) {
@@ -49,4 +49,4 @@ void hashtab_delete(struct listnode **hashtab, std::string key) {
         }
         prev = p;
     }
-}
+} */

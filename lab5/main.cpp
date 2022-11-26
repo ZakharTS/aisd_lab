@@ -16,5 +16,6 @@ int main() {
         graph[a - 1].push_back(std::make_pair(b - 1, w));
     }
     dijkstra(graph, n, 0);
+
     return 0;
 }

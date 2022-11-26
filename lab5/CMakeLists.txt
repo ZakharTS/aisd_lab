@@ -3,4 +3,4 @@ project(lab5)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(lab5 main.cpp dijkstra.cpp dijkstra.h)
+add_executable(lab5 main.cpp dijkstra.cpp dijkstra.h floydwarshell.cpp floydwarshell.h)
