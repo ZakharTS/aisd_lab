@@ -1,0 +1,23 @@
+7 9
+1 2 10
+1 4 8
+2 3 7
+3 4 11
+3 5 5
+3 6 6
+4 5 8
+5 6 4
+6 7 9
+
+ Shortest path between vertices 1 and 2 is:
+1, 2,
+Shortest path between vertices 1 and 3 is:
+1, 2, 3,
+Shortest path between vertices 1 and 4 is:
+1, 4,
+Shortest path between vertices 1 and 5 is:
+1, 4, 5,
+Shortest path between vertices 1 and 6 is:
+1, 4, 5, 6,
+Shortest path between vertices 1 and 7 is:
+1, 4, 5, 6, 7,
