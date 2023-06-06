@@ -4,6 +4,6 @@
 #include <vector>
 #include <iostream>
 
-void floydwarshell(std::vector<std::pair<int, int>> graph[], int n);
+void floydwarshall(std::vector<std::pair<int, int>> graph[], int n);
 
 #endif //LAB5_FLOYDWARSHELL_H

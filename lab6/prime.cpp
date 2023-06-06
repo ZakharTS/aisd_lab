@@ -1,24 +1,28 @@
+    #include "prime.h"
 
-#include "prime.h"
-
-int prime(std::vector <std::pair<int, int>> graph[], int size) {
+void prime(std::vector <std::pair<int, int>> graph[], int size) {
     bool used[size];
-    int mst_weight = 0;     //Текущий вес остова.
+    int pr[size];
+    for (int i = 0; i < size; i++) {
+        pr[i] = -1;
+        used[i] = 0;
+    }
+    int mst_weight = 0;
 
     std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> q;
 
-    q.push({0, 0});     //Начнём с вершины 0.
-
+    q.push({0, 0});
+    int last;
     while (!q.empty()) {
         std::pair<int, int> c = q.top();
         q.pop();
 
         int dst = c.first, v = c.second;
 
-        if (used[v]) {      //вершина уже добавлена в остов
+        if (used[v]) {
             continue;
         }
-
+        last = v;
         used[v] = true;
         mst_weight += dst;
 
@@ -26,10 +30,24 @@ int prime(std::vector <std::pair<int, int>> graph[], int size) {
             int u = e.first, len_vu = e.second;
 
             if (!used[u]) {
-                q.push({len_vu, u});    //Заметьте: мы учитываем только длину ребра.
+                pr[u] = v;
+                q.push({len_vu, u});
             }
         }
     }
 
-    std::cout << "Minimum spanning tree weight: " << mst_weight << std::endl;
+    std::cout << "Minimum spanning tree weight is " << mst_weight << ":" << std::endl;
+    std::vector<int> path;
+
+    path.push_back(last);
+
+    while (pr[last] != -1) {
+        last = pr[last];
+        path.push_back(last);
+    }
+    reverse(path.begin(), path.end());
+    for (auto v: path) {
+        std::cout << v + 1 << " ";
+    }
+    std::cout << std::endl;
 }

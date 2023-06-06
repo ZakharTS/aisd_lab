@@ -1,6 +1,6 @@
 #include <iostream>
 #include "dijkstra.h"
-
+#include "floydwarshall.h"
 
 int main() {
     int n;
@@ -15,7 +15,10 @@ int main() {
         std::cin >> a >> b >> w;
         graph[a - 1].push_back(std::make_pair(b - 1, w));
     }
+    std::cout << "Dijkstra:" << std::endl;
     dijkstra(graph, n, 0);
+    std::cout << std::endl << "Floyd-Warshall:" << std::endl;
+    floydwarshall(graph, n);
 
     return 0;
 }

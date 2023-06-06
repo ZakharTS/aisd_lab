@@ -55,7 +55,7 @@ void dijkstra(std::vector<std::pair<int, int>> graph[], int n, int start) {
         std::cout << "Shortest path between vertices " << start + 1 << " and " << i + 1 << " is "  << ans[i]  << ":" << std::endl;
 
         for (auto v: path) {
-            std::cout << v + 1 << ", ";
+            std::cout << v + 1 << " ";
         }
         std::cout << std::endl;
     }

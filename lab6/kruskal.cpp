@@ -4,7 +4,7 @@ int get_root(int *p, int v) {
     if (p[v] == v) {
         return v;
     } else {
-        return p[v] = get_root(p, p[v]);   //На выходе из рекурсии переподвешиваем v
+        return p[v] = get_root(p, p[v]);
     }
 }
 
@@ -27,16 +27,7 @@ bool merge(int *p, int *rk, int a, int b) {
     }
 }
 
-//Тип для представления рёбер.
-struct edge {
-    int a, b, len;
-
-    bool operator<(const edge &other) {
-        return len < other.len;
-    }
-};
-
-int kruskal(std::vector<edge> edges, int size) {
+void kruskal(std::vector<edge> edges, int size) {
     int p[size];
     int rk[size];
     for (int i = 0; i < size; i++) {
@@ -46,13 +37,15 @@ int kruskal(std::vector<edge> edges, int size) {
     std::sort(edges.begin(), edges.end());
 
     int mst_weight = 0;
-
-
+    std::vector<edge> res;
     for (edge e: edges) {
-        if (merge(p, rk, e.a, e.b)) {      //Если a и b находятся в разных компонентах,
-            mst_weight += e.len;    //Добавить ребро в минимальный остов.
+        if (merge(p, rk, e.a, e.b)) {
+            mst_weight += e.len;
+            res.push_back(e);
         }
     }
-
-    std::cout << "Minimum spanning tree weight: " << mst_weight << std::endl;
+    std::cout << "Minimum spanning tree weight is " << mst_weight << ":" << std::endl;
+    for (auto e : res) {
+        std::cout << e.a << " - " << e.b << std::endl;
+    }
 }
